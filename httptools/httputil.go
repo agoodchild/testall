@@ -1,37 +1,22 @@
 package httptools
 
 import (
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strings"
 )
 
-func SendRequest(url string, method string, data string, accept string, contentType string) (int, string, error) {
+func SendRequest(url string, method string, data string, accept string, contentType string) (*http.Response, error) {
 	client := &http.Client{}
 	request, err := http.NewRequest(method, url, strings.NewReader(data))
 	if err != nil {
-		return 0, "", err
+		return nil, err
 	}
 	request.Header.Add("Accept", accept)
 	request.Header.Add("Content-Type", contentType)
 	response, err := client.Do(request)
 	if err != nil {
-		return 0, "", err
+		return response, err
 	}
-	if response == nil {
-		return 0, "", nil
-	}
-	defer func() {
-		_ = response.Body.Close()
-	}()
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return response.StatusCode, "", err
-	}
-	if response.StatusCode!=200{
-		fmt.Println(string(body))
-	}
-	return response.StatusCode, string(body), nil
+	return response,nil
 }
 
