@@ -6,5 +6,5 @@ import "OpenPlatform/testall/module"
 func main() {
 	//DeleteAllHBaseTable("127.0.0.1:9093")
 	//CreateTestData()
-	module.QueryData("127.0.0.1:9093","test")
+	module.QueryData("test","127.0.0.1:9093")
 }

@@ -36,3 +36,27 @@ func (data HBaseData) ToJSON(encrypt bool) (string, error) {
 	}
 	return string(bts), nil
 }
+
+func (data *HBaseData) DecodeBase64() {
+
+	for idxRow, _ := range data.Rows {
+		bts, err := base64.StdEncoding.DecodeString(data.Rows[idxRow].RowKey)
+		if err != nil {
+			panic(err)
+		}
+		data.Rows[idxRow].RowKey=string(bts)
+		for idxCell, _ := range data.Rows[idxRow].Cells {
+			bts, err = base64.StdEncoding.DecodeString(data.Rows[idxRow].Cells[idxCell].Column)
+			if err != nil {
+				panic(err)
+			}
+			data.Rows[idxRow].Cells[idxCell].Column=string(bts)
+
+			bts, err = base64.StdEncoding.DecodeString(data.Rows[idxRow].Cells[idxCell].Value)
+			if err != nil {
+				panic(err)
+			}
+			data.Rows[idxRow].Cells[idxCell].Value=string(bts)
+		}
+	}
+}
