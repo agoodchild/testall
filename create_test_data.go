@@ -8,9 +8,9 @@ import (
 
 func CreateTestData() {
 	table:="test1"
-	host:="127.0.0.1:9093"
+	host:="9.134.193.247:9093"
 	//删除表
-	hbase.DeleteTable(table,host)
+	//hbase.DeleteTable(table,host)
 	//创建表
 	_=hbase.CreateTable(table,host)
 	//添加数据

@@ -1,6 +1,7 @@
 package httptools
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -27,6 +28,9 @@ func SendRequest(url string, method string, data string, accept string, contentT
 	body, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		return response.StatusCode, "", err
+	}
+	if response.StatusCode!=200{
+		fmt.Println(string(body))
 	}
 	return response.StatusCode, string(body), nil
 }
