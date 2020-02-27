@@ -1,1 +1,13 @@
-<Scanner batch="100"> <filter> { "type": "PrefixFilter", "value": "111" } </filter> </Scanner>
+<Scanner startRow="MTExCg==" endRow="NTU1Cg==" batch="1024">
+<filter>
+{
+	"latestVersion":true, 
+	"ifMissing":true, 
+	"qualifier":"aWQ=", 
+	"family":"aWQ=", 
+	"op":"EQUAL", 
+	"type":"SingleColumnValueFilter", 
+	"comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BinaryComparator"}
+}
+</filter>
+</Scanner>

@@ -1,0 +1,6 @@
+{
+	"startRow":"MTExCg==",
+	"endRow":"NTU1Cg==",
+	"batch":"1024",
+	"filter":"{\"latestVersion\":true,\"ifMissing\":true,\"qualifier\":\"aWQ=\",\"family\":\"aWQ=\",\"op\":\"EQUAL\",\"type\":\"SingleColumnValueFilter\",\"comparator\":{\"value\":\"MjIyMjIyMjIyMjIyMjI=\",\"type\":\"BinaryComparator\"}}"
+}
