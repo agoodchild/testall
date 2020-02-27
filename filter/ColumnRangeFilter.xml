@@ -1,0 +1,14 @@
+<!-- ColumnRangeFilter
+可用！对列进行范围过滤，注意，是qualifier不是整个列簇+列名，示例：以a开头的到以k开头的列
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+        "type":"ColumnRangeFilter",
+        "minColumn":"YQ==",
+        "minColumnInclusive":true,
+        "maxColumn":"aw==",
+        "maxColumnInclusive":true
+        }
+    </filter>
+</Scanner>

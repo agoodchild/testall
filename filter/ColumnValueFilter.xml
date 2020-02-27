@@ -1,0 +1,16 @@
+<!--ColumnValueFilter
+始终没调试通过，不知道问题出在哪！！！！对某个列的值进行过滤，要指定 family，qualifier，operate，和比较器comparator
+跟SingleColumnFilter的区别在于，只返回指定的列，不返回全部列
+示例：id:id=22222222222222
+-->
+<Scanner batch="1024">
+<filter>
+    {
+    "qualifier":"aWQ=",
+    "family":"aWQ=",
+    "op":"EQUAL",
+    "type":"ColumnValueFilter",
+    "comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BitComparator"}
+    }
+</filter>
+</Scanner>

@@ -1,0 +1,12 @@
+<!-- ColumnPaginationFilter
+可用！不对行进行过滤，只对列进行过滤，offset指定偏移，limit指定取几个列，相当于在列方向上的分页
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+        "type":"ColumnPaginationFilter",
+        "limit":3,
+        "offset":0
+        }
+    </filter>
+</Scanner>

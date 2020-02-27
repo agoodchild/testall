@@ -1,0 +1,11 @@
+<!-- ColumnPrefixFilter
+可用！对列进行过滤，只返回包含指定前缀的列，注意，是qualifier不是整个列簇+列名，示例：列名以start开头的
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+        "type":"ColumnPrefixFilter",
+        "value":"c3RhcnQ="
+        }
+    </filter>
+</Scanner>

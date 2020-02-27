@@ -1,0 +1,28 @@
+<!-- FilterList
+多个filter组合，用MUST_PASS_ONE或者MUST_PASS_ALL来标识关系，AND 或者 OR
+下边示例中的是两个条件，id:id=222222222222或者id:id=333333333333的
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+            "type": "FilterList",
+            "op": "MUST_PASS_ONE",
+            "filters": [
+                        {
+                        "qualifier":"aWQ=",
+                        "family":"aWQ=",
+                        "op":"EQUAL",
+                        "type":"SingleColumnValueFilter",
+                        "comparator":{"value":"MzMzMzMzMzMzMzMz","type":"BinaryComparator"}
+                        },
+                        {
+                        "qualifier":"aWQ=",
+                        "family":"aWQ=",
+                        "op":"EQUAL",
+                        "type":"SingleColumnValueFilter",
+                        "comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BinaryComparator"}
+                        }
+            ]
+        }
+    </filter>
+</Scanner>
