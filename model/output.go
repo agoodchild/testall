@@ -60,3 +60,12 @@ func (data *HBaseData) DecodeBase64() {
 		}
 	}
 }
+
+func (row HBaseRow)GetCell(column string)*HBaseCell{
+	for _,cell:=range row.Cells{
+		if cell.Column==column{
+			return &cell
+		}
+	}
+	return nil
+}

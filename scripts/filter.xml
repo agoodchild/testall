@@ -1,13 +1,11 @@
-<Scanner startRow="MTExCg==" endRow="NTU1Cg==" batch="1024">
+<Scanner batch="1024">
 <filter>
-{
-	"latestVersion":true, 
-	"ifMissing":true, 
-	"qualifier":"aWQ=", 
-	"family":"aWQ=", 
-	"op":"EQUAL", 
-	"type":"SingleColumnValueFilter", 
-	"comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BinaryComparator"}
-}
+    {
+    "qualifier":"aWQ=",
+    "family":"aWQ=",
+    "op":"EQUAL",
+    "type":"SingleColumnValueFilter",
+    "comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BinaryComparator"}
+    }
 </filter>
 </Scanner>

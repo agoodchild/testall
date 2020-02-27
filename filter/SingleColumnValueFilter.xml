@@ -1,0 +1,22 @@
+<!--SingleColumnValueFilter
+对某个列的值进行过滤，要指定 family，qualifier，operate，和比较器comparator
+示例：id:id=22222222222222
+-->
+<Scanner batch="1024">
+<filter>
+    {
+    "qualifier":"aWQ=",
+    "family":"aWQ=",
+    "op":"EQUAL",
+    "type":"SingleColumnValueFilter",
+    "comparator":{"value":"MzMzMzMzMzMzMzMz","type":"BinaryComparator"}
+    },
+    {
+    "qualifier":"aWQ=",
+    "family":"aWQ=",
+    "op":"EQUAL",
+    "type":"SingleColumnValueFilter",
+    "comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BinaryComparator"}
+    }
+</filter>
+</Scanner>
