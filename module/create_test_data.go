@@ -18,45 +18,45 @@ func CreateTestData() {
 		Table:table,
 		Rows: []HBaseRow{
 			{
-				RowKey:"111111111111",
+				RowKey:"111",
 				Cells: []HBaseCell{
-					{Column:"id:id",Value:"111111111"},
+					{Column:"id:id",Value:"111"},
 					{Column:"info:starttime",Value:"1582633622"},
 					{Column:"info:endtime",Value:"1582720022"},
 					{Column:"info:jsondata",Value:"2020/2/25 20:27:2-2020/2/26 20:27:2"},
 				},
 			},
 			{
-				RowKey:"2222222222222",
+				RowKey:"222",
 				Cells: []HBaseCell{
-					{Column:"id:id",Value:"22222222222222"},
+					{Column:"id:id",Value:"222"},
 					{Column:"info:starttime",Value:"1582547222"},
 					{Column:"info:endtime",Value:"1582633622"},
 					{Column:"info:jsondata",Value:"2020/2/24 20:27:2-2020/2/25 20:27:2"},
 				},
 			},
 			{
-				RowKey:"33333333333333",
+				RowKey:"333",
 				Cells: []HBaseCell{
-					{Column:"id:id",Value:"333333333333"},
+					{Column:"id:id",Value:"333"},
 					{Column:"info:starttime",Value:"1582447222"},
 					{Column:"info:endtime",Value:"1582533622"},
 					{Column:"info:jsondata",Value:"2020/2/23 20:27:2-2020/2/24 20:27:2"},
 				},
 			},
 			{
-				RowKey:"4444444444444",
+				RowKey:"444",
 				Cells: []HBaseCell{
-					{Column:"id:id",Value:"444444444444"},
+					{Column:"id:id",Value:"444"},
 					{Column:"info:starttime",Value:"1582347222"},
 					{Column:"info:endtime",Value:"1582433622"},
 					{Column:"info:jsondata",Value:"2020/2/22 20:27:2-2020/2/23 20:27:2"},
 				},
 			},
 			{
-				RowKey:"55555555555",
+				RowKey:"555",
 				Cells: []HBaseCell{
-					{Column:"id:id",Value:"55555555555555"},
+					{Column:"id:id",Value:"555"},
 					{Column:"info:starttime",Value:"1582247222"},
 					{Column:"info:endtime",Value:"1582333622"},
 					{Column:"info:jsondata",Value:"2020/2/21 20:27:2-2020/2/22 20:27:2"},

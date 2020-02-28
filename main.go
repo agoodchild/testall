@@ -19,7 +19,7 @@ func main() {
 		}
 	}*/
 	//DeleteAllHBaseTable("127.0.0.1:9093")
-	//CreateTestData()
+	//module.CreateTestData()
 	module.QueryData("test","127.0.0.1:9093")
 	//fmt.Println(base64.StdEncoding.EncodeToString([]byte("111")))
 }
