@@ -1,0 +1,15 @@
+<!--KeyOnlyFilter
+可用！只返回每个列名，也就是Key，不返回value，例如：
+111[id:id->][info:endtime->][info:jsondata->][info:starttime->]
+222[id:id->][info:endtime->][info:jsondata->][info:starttime->]
+333[id:id->][info:endtime->][info:jsondata->][info:starttime->]
+444[id:id->][info:endtime->][info:jsondata->][info:starttime->]
+555[id:id->][info:endtime->][info:jsondata->][info:starttime->]
+-->
+<Scanner batch="1024">
+<filter>
+    {
+    "type": "KeyOnlyFilter"
+    }
+</filter>
+</Scanner>

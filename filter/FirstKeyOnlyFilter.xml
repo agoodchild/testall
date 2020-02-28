@@ -1,0 +1,10 @@
+<!--FirstKeyOnlyFilter
+可用！只返回第一个列，在查询行记录数count的时候特别高效
+-->
+<Scanner batch="1024">
+<filter>
+    {
+    "type": "FirstKeyOnlyFilter"
+    }
+</filter>
+</Scanner>

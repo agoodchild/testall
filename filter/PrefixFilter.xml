@@ -1,5 +1,5 @@
 <!-- PrefixFilter
-可用！对行进行过滤，按键值前缀进行过滤，示例：rowkey前缀为222
+可用！对rowKey进行过滤，按键值前缀进行过滤，示例：rowkey前缀为222
 -->
 <Scanner  batch="1024">
     <filter>

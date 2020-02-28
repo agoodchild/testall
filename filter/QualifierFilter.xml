@@ -1,0 +1,16 @@
+<!-- QualifierFilter
+可用！对列进行过滤，可通过设置op和comparator，比如大于某个值，等于某个值，小于某个值
+不对行进行过滤。
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+        "type": "QualifierFilter",
+        "op": "GREATER",
+        "comparator": {
+        "type": "BinaryComparator",
+        "value": "bQ=="
+        }
+        }
+    </filter>
+</Scanner>

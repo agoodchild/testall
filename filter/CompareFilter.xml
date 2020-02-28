@@ -1,0 +1,13 @@
+<!--CompareFilter
+不能直接使用，这是一个抽象的filter，子类包括：
+RowFilter、 FamilyFilter、QualifierFilter、ValueFilter等
+-->
+<Scanner batch="1024">
+<filter>
+    {
+    "op":"EQUAL",
+    "type":"CompareFilter",
+    "comparator":{"value":"aWQ=","type":"BitComparator"}
+    }
+</filter>
+</Scanner>

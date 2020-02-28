@@ -1,0 +1,11 @@
+<!-- RandomRowFilter
+可用！按照chance的几率随机取值，chance介于0于1之间，如果是0就返回空，如果是1返回所有行
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+            "type":"RandomRowFilter",
+            "chance":"0.3"
+        }
+    </filter>
+</Scanner>

@@ -1,0 +1,15 @@
+<!-- ValueFilter
+可用！对所有Cell进行值过滤
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+            "type": "ValueFilter",
+            "op": "GREATER",
+            "comparator": {
+                "type": "BinaryComparator",
+                "value": "MjEx"
+            }
+        }
+    </filter>
+</Scanner>

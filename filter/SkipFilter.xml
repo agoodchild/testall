@@ -1,0 +1,15 @@
+<!-- SkipFilter
+没调试通过，这是一个包装filter，
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+        "type":"SkipFilter",
+        "filter":{
+                "type":"ValueFilter",
+                "op":"EQUAL",
+                "comparator":{"value":"11","type":"BinaryComparator"}
+            }
+        }
+    </filter>
+</Scanner>

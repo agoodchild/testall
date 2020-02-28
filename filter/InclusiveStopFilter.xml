@@ -1,0 +1,12 @@
+<!--InclusiveStopFilter
+可用！设置一个stop rowkey，扫描到这个值就停止，这个值不一定存在，是按范围扫描的，比如key为222，333，假如设置的value为223，则扫描到
+222就停止了。
+-->
+<Scanner batch="1024">
+<filter>
+    {
+    "type": "InclusiveStopFilter",
+    "value":"MzM0"
+    }
+</filter>
+</Scanner>

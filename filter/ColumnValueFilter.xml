@@ -10,7 +10,7 @@
     "family":"aWQ=",
     "op":"EQUAL",
     "type":"ColumnValueFilter",
-    "comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BitComparator"}
+    "comparator":{"value":"aWQ=","type":"BitComparator"}
     }
 </filter>
 </Scanner>

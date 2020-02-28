@@ -1,0 +1,15 @@
+<!--FuzzyRowFilter
+没有调试成功！
+假设行键格式是userId_actionId_year_month。用户id的长度固定为4，actionId的长度为2，年和月分别为4和2字节长。
+假设我们需要获取在任何一年的一月执行特定操作（编码为“99”）的所有用户。然后一对（row key，fuzzy info）将如下：
+row key="????_99_????_01"（?可以使用任何值）
+即fuzzy info告诉匹配的掩码是“？？？”？？？？_99度？？？？_01“，在哪里？可以是任何值。
+-->
+<Scanner batch="1024">
+<filter>
+    {
+    "type":"FuzzyRowFilter",
+    "value":[["MTE/","\x00\x00\x01"]]
+    }
+</filter>
+</Scanner>

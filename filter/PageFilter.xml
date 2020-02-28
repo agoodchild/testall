@@ -1,0 +1,12 @@
+<!--PageFilter
+可用！对scan结果的行数量进行限制，如果设置值为3，则扫描到3条结果后就停止，
+但是不保证结果一定会小于等于这个数字，因为扫描是在多个regionServer同时进行的。
+-->
+<Scanner batch="1024">
+<filter>
+    {
+        "type": "PageFilter",
+        "value": "3"
+    }
+</filter>
+</Scanner>

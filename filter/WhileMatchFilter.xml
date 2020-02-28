@@ -1,0 +1,20 @@
+<!-- WhileMatchFilter
+没有测试通过，这个玩意好像没法在REST中调用，说明：
+这是一个包装过滤器，一旦被包装的filter中的filterRowKey()、filterCell()、filterRow()中的任何一个方法返回true，
+那么该filter的 filterAllRemaining()方法立即返回true
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+            "type": "WhileMatchFilter",
+            "filter":{
+                "type": "RowFilter",
+                "op": "GREATER",
+                "comparator": {
+                    "type": "BinaryComparator",
+                    "value": "MjIy"
+                }
+            }
+        }
+    </filter>
+</Scanner>

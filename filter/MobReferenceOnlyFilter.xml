@@ -1,0 +1,8 @@
+<!-- MobReferenceOnlyFilter
+A filter that returns the cells which have mob reference tags. It's a server-side filter.
+只返回包含mob引用的cell
+-->
+<Scanner  batch="1024">
+    <filter>
+    </filter>
+</Scanner>

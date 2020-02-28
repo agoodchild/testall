@@ -1,0 +1,16 @@
+<!-- RowFilter
+可用！通过rowKey对行进行过滤，比如可以设置大于，小于，等于某个值等。
+不对行进行过滤。示例中是scan rowKey>111的行
+-->
+<Scanner  batch="1024">
+    <filter>
+        {
+            "type": "RowFilter",
+            "op": "GREATER",
+            "comparator": {
+                "type": "BinaryComparator",
+                "value": "MTEx"
+            }
+        }
+    </filter>
+</Scanner>

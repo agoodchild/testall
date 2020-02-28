@@ -1,0 +1,16 @@
+<!--MultipleColumnPrefixFilter
+可用！可以设置多个列的qualifier的前缀，比如示例中：id，start，end，返回id:id,info:starttime,info:endtime,
+不对行进行过滤，只对列进行过滤。
+-->
+<Scanner batch="1024">
+<filter>
+    {
+        "type": "MultipleColumnPrefixFilter",
+        "prefixes": [
+            "aWQ=",
+            "c3RhcnQ=",
+            "ZW5k"
+        ]
+    }
+</filter>
+</Scanner>
