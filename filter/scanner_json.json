@@ -1,0 +1,8 @@
+{
+   "batch":1204,
+   "startRow":"MTEx",
+   "endRow": "NDQ0",
+   "filter":"{\"type\":\"RowFilter\",\"op\":\"EQUAL\",\"comparator\":{\"type\":\"BinaryComparator\",\"value\":\"MjIy\"}}"
+}
+
+

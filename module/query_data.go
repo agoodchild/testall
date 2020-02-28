@@ -9,9 +9,10 @@ import (
 	"strconv"
 )
 
-func QueryData(table string, host string) {
+func ScanData(table string, host string) {
 	var url = fmt.Sprintf("http://%s/%s/scanner", host, table)
-	var contentType = "text/xml"
+	//var contentType = "text/xml"
+	var contentType = "application/json"
 	bts, err := ioutil.ReadFile("./filter/zfilter.xml")
 	if err != nil {
 		fmt.Println(err)
@@ -68,4 +69,26 @@ func ShowResult(location string){
 		}
 		fmt.Print("\n")
 	}
+}
+
+type Comparator struct{
+	Type string `json:"type"`
+	Value string `json:"value"`
+}
+
+type Filter struct{
+	Type string `json:"type"`
+	Op string `json:"op"`
+	Comparator Comparator `json:"comparator"`
+}
+
+type Scanner struct{
+	Batch int `json:"batch"`
+	StartRow string `json:"startRow"`
+	EndRow string `json:"endRow"`
+	Filter string `json:"filter"`
+}
+func QueryData(){
+	//startTime:=time.Now()
+	//endTime:=time.Now()
 }
