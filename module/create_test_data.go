@@ -23,7 +23,7 @@ func CreateTestData() {
 					{Column:"id:id",Value:"111"},
 					{Column:"info:starttime",Value:"1582633622"},
 					{Column:"info:endtime",Value:"1582720022"},
-					{Column:"info:jsondata",Value:"2020/2/25 20:27:2-2020/2/26 20:27:2"},
+					{Column:"info:jsondata",Value:"data111"},
 				},
 			},
 			{
@@ -32,7 +32,7 @@ func CreateTestData() {
 					{Column:"id:id",Value:"222"},
 					{Column:"info:starttime",Value:"1582547222"},
 					{Column:"info:endtime",Value:"1582633622"},
-					{Column:"info:jsondata",Value:"2020/2/24 20:27:2-2020/2/25 20:27:2"},
+					{Column:"info:jsondata",Value:"data222"},
 				},
 			},
 			{
@@ -41,7 +41,7 @@ func CreateTestData() {
 					{Column:"id:id",Value:"333"},
 					{Column:"info:starttime",Value:"1582447222"},
 					{Column:"info:endtime",Value:"1582533622"},
-					{Column:"info:jsondata",Value:"2020/2/23 20:27:2-2020/2/24 20:27:2"},
+					{Column:"info:jsondata",Value:"data333"},
 				},
 			},
 			{
@@ -50,7 +50,7 @@ func CreateTestData() {
 					{Column:"id:id",Value:"444"},
 					{Column:"info:starttime",Value:"1582347222"},
 					{Column:"info:endtime",Value:"1582433622"},
-					{Column:"info:jsondata",Value:"2020/2/22 20:27:2-2020/2/23 20:27:2"},
+					{Column:"info:jsondata",Value:"data444"},
 				},
 			},
 			{
@@ -59,7 +59,7 @@ func CreateTestData() {
 					{Column:"id:id",Value:"555"},
 					{Column:"info:starttime",Value:"1582247222"},
 					{Column:"info:endtime",Value:"1582333622"},
-					{Column:"info:jsondata",Value:"2020/2/21 20:27:2-2020/2/22 20:27:2"},
+					{Column:"info:jsondata",Value:"data555"},
 				},
 			},
 		},
