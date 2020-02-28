@@ -5,7 +5,7 @@
     <filter>
         {
         "type":"PrefixFilter",
-        "value":"MjIy"
+        "value":"MTE="
         }
     </filter>
 </Scanner>

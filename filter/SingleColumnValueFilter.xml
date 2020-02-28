@@ -9,14 +9,7 @@
     "family":"aWQ=",
     "op":"EQUAL",
     "type":"SingleColumnValueFilter",
-    "comparator":{"value":"MzMzMzMzMzMzMzMz","type":"BinaryComparator"}
-    },
-    {
-    "qualifier":"aWQ=",
-    "family":"aWQ=",
-    "op":"EQUAL",
-    "type":"SingleColumnValueFilter",
-    "comparator":{"value":"MjIyMjIyMjIyMjIyMjI=","type":"BinaryComparator"}
+    "comparator":{"value":"MjIy","type":"BinaryComparator"}
     }
 </filter>
 </Scanner>

@@ -7,7 +7,7 @@ RowFilter、 FamilyFilter、QualifierFilter、ValueFilter等
     {
     "op":"EQUAL",
     "type":"CompareFilter",
-    "comparator":{"value":"aWQ=","type":"BitComparator"}
+    "comparator":{"value":"MjIy","type":"BinaryComparator"}
     }
 </filter>
 </Scanner>

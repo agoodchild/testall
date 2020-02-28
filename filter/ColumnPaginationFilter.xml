@@ -6,7 +6,7 @@
         {
         "type":"ColumnPaginationFilter",
         "limit":3,
-        "offset":0
+        "offset":1
         }
     </filter>
 </Scanner>

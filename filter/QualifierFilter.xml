@@ -8,9 +8,9 @@
         "type": "QualifierFilter",
         "op": "GREATER",
         "comparator": {
-        "type": "BinaryComparator",
-        "value": "bQ=="
-        }
+                "type": "BinaryComparator",
+                "value": "bQ=="
+            }
         }
     </filter>
 </Scanner>
