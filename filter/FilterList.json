@@ -1,0 +1,6 @@
+{
+  "batch":1204,
+  "startRow":"MTEx",
+  "endRow": "NDQ0",
+  "filter":"{\"type\":\"FilterList\",\"op\":\"MUST_PASS_ALL\",\"filters\":[{\"type\":\"PageFilter\",\"value\":5},{\"type\":\"FirstKeyOnlyFilter\"}]}"
+}

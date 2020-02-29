@@ -4,6 +4,7 @@ import (
 	"OpenPlatform/testall/hbase"
 	. "OpenPlatform/testall/model"
 	"fmt"
+	"strconv"
 )
 
 func CreateTestData() {
@@ -12,7 +13,7 @@ func CreateTestData() {
 	//删除表
 	//hbase.DeleteTable(table,host)
 	//创建表
-//	_=hbase.CreateTable(table,host)
+	_=hbase.CreateTable(table,host)
 	//添加数据
 	hbd:= HBaseData{
 		Table:table,
@@ -112,9 +113,168 @@ func CreateTestData() {
 					{Column:"info:jsondata",Value:"data555"},
 				},
 			},
+			{
+				RowKey:"1582147222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1582047222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581947222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581847222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581747222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581647222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581547222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581447222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581347222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581247222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581147222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1581047222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1580947222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1580847222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
+			{
+				RowKey:"1580747222",
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:"555"},
+					{Column:"info:starttime",Value:"1582247222"},
+					{Column:"info:endtime",Value:"1582333622"},
+					{Column:"info:jsondata",Value:"data555"},
+				},
+			},
 		},
 	}
 
+	hbase.SaveHBaseDataToHBase([]HBaseData{hbd},host)
+	fmt.Println("创建测试数据成功")
+}
+
+func CreateBigTestData(table string,host string ,count int){
+	hbd:= HBaseData{
+		Table:table,
+	}
+	max:=1582633622
+	var rows []HBaseRow
+	for i:=0;i<count;i++{
+		key:=strconv.Itoa(max-i)
+		row:=HBaseRow{
+			RowKey:key,
+			Cells: []HBaseCell{
+				{Column:"id:id",Value:key},
+				{Column:"info:starttime",Value:"1582633622"},
+				{Column:"info:endtime",Value:"1582720022"},
+				{Column:"info:jsondata",Value:"data"+key},
+			},
+		}
+		rows=append(rows,row)
+	}
+	hbd.Rows=rows
 	hbase.SaveHBaseDataToHBase([]HBaseData{hbd},host)
 	fmt.Println("创建测试数据成功")
 }

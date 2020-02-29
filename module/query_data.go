@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"strconv"
+	"strings"
 )
 
 func ScanData(table string, host string) {
@@ -18,6 +19,10 @@ func ScanData(table string, host string) {
 		fmt.Println(err)
 	}
 	var filterFileName = string(bts)
+	if strings.Contains(filterFileName,".xml"){
+		contentType="text/xml"
+	}
+
 	bts, err = ioutil.ReadFile("./filter/" + filterFileName)
 	var data = string(bts)
 	fmt.Println("过滤器文件:\n" + filterFileName)
@@ -28,11 +33,11 @@ func ScanData(table string, host string) {
 	}
 	fmt.Println("创建Scanner响应结果:" + strconv.Itoa(response.StatusCode))
 	if response.StatusCode != 201 {
-	    bbb,err:=ioutil.ReadAll(response.Body)
-	    if err!=nil{
-	        panic(err)
-        }
-        fmt.Println(string(bbb))
+		bbb, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(string(bbb))
 		fmt.Println(response)
 	} else {
 		location := response.Header.Get("Location")
@@ -41,7 +46,8 @@ func ScanData(table string, host string) {
 		ShowResult(location)
 	}
 }
-func ShowResult(location string){
+
+func ShowResult(location string) {
 	fmt.Println("查询结果为:")
 	response, err := httptools.SendRequest(location, "GET", "", "application/json", "application/json")
 	if err != nil {
@@ -51,7 +57,7 @@ func ShowResult(location string){
 	if err != nil {
 		panic(err)
 	}
-	if string(bts)==""{
+	if string(bts) == "" {
 		fmt.Println("NO CONTENT")
 		return
 	}
@@ -63,32 +69,10 @@ func ShowResult(location string){
 		panic(string(bts))
 	}
 	for _, row := range hbData.Rows {
-		fmt.Print( row.RowKey)
-		for _,cell:=range row.Cells{
-			fmt.Print("["+cell.Column+"->"+cell.Value+"]")
+		fmt.Print(row.RowKey)
+		for _, cell := range row.Cells {
+			fmt.Print("[" + cell.Column + "->" + cell.Value + "]")
 		}
 		fmt.Print("\n")
 	}
-}
-
-type Comparator struct{
-	Type string `json:"type"`
-	Value string `json:"value"`
-}
-
-type Filter struct{
-	Type string `json:"type"`
-	Op string `json:"op"`
-	Comparator Comparator `json:"comparator"`
-}
-
-type Scanner struct{
-	Batch int `json:"batch"`
-	StartRow string `json:"startRow"`
-	EndRow string `json:"endRow"`
-	Filter string `json:"filter"`
-}
-func QueryData(){
-	//startTime:=time.Now()
-	//endTime:=time.Now()
 }
