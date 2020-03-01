@@ -37,7 +37,7 @@ func (data HBaseData) ToJSON(encrypt bool) (string, error) {
 	return string(bts), nil
 }
 
-func (data *HBaseData) DecodeBase64() {
+func (data HBaseData) DecodeBase64() {
 
 	for idxRow, _ := range data.Rows {
 		bts, err := base64.StdEncoding.DecodeString(data.Rows[idxRow].RowKey)

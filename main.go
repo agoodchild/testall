@@ -4,6 +4,7 @@ import (
 	"OpenPlatform/testall/module"
 	"fmt"
 	"os"
+	"strconv"
 )
 
 //删除所有表
@@ -25,13 +26,20 @@ func main() {
 			module.CreateTestData()
 		}
 		if operate == "big" {
-			module.CreateBigTestData("test1", "127.0.0.1:9093", 100000)
+			module.CreateBigTestData("trackinfo_deviceid1", "127.0.0.1:9093", 100000)
 		}
 		if operate == "query" {
-			pageSize := 50000
-			startTime :=int64(1582533622)  // endTime - int64(pageSize)
-			endTime :=startTime+ int64(pageSize)
-			module.QueryData("test1", "127.0.0.1:9093", startTime, endTime, 1, pageSize)
+			pageIndex := 1
+			pageSize := 10
+			if len(os.Args) > 2 {
+				pageIndex, _ = strconv.Atoi(os.Args[2])
+			}
+			if len(os.Args) > 3 {
+				pageSize, _ = strconv.Atoi(os.Args[3])
+			}
+			startTime := int64(1582623622) // endTime - int64(pageSize)
+			endTime :=int64(1582633622)
+			module.QueryData("test1", "127.0.0.1:9093", startTime, endTime, pageIndex, pageSize)
 		}
 	}
 }

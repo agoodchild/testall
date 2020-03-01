@@ -259,17 +259,19 @@ func CreateBigTestData(table string,host string ,count int){
 	hbd:= HBaseData{
 		Table:table,
 	}
+	var traceData=`{"orderid":"%s","deviceid":"device_key_value","api_key":"api_key_value","starttime":1582602213,"endtime":1582602213,"distance":0,"duration":12,"opt":0,"time_res":[{"time_start":"17:00","time_end":"20:00","zone_start":"2020-02-24 17:00:00","zone_end":"2020-02-24 20:00:00","start":"2020-02-24 17:48:27","end":"2020-02-24 17:48:39","distance":0,"duration":12}],"track":[{"loctime":1582537715,"bind_lng":116.805898,"bind_lat":40.038987,"bind_bearing":40.038987,"altitude":40.038987,"radius":40.038987,"speed":40.038987,"bearing":40.038987}],"track_opt":[{"loctime":1582537715,"bind_lng":116.805898,"bind_lat":40.038987,"bind_bearing":40.038987,"altitude":40.038987,"radius":40.038987,"speed":40.038987,"bearing":40.038987}]}`
 	max:=1582633622
 	var rows []HBaseRow
 	for i:=0;i<count;i++{
 		key:=strconv.Itoa(max-i)
+		td:=fmt.Sprintf(traceData,strconv.Itoa(i))
 		row:=HBaseRow{
 			RowKey:key,
 			Cells: []HBaseCell{
 				{Column:"id:id",Value:key},
 				{Column:"info:starttime",Value:"1582633622"},
 				{Column:"info:endtime",Value:"1582720022"},
-				{Column:"info:jsondata",Value:"data"+key},
+				{Column:"info:jsondata",Value:td},
 			},
 		}
 		rows=append(rows,row)

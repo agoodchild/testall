@@ -5,12 +5,20 @@ import (
 	"OpenPlatform/testall/model"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"strconv"
 	"time"
 )
 
+type PageResult struct {
+	PageIndex int `json:"pageindex"`
+	PageSize  int `json:"pagesize"`
+	Count     int         `json:"count"`
+	Data      interface{} `json:"data"`
+}
 type Scanner struct {
 	Batch    int    `json:"batch,omitempty"`
 	StartRow string `json:"startRow,omitempty"` //包含
@@ -43,8 +51,22 @@ func (scanner Scanner) ToJSON() string {
 	}
 	return string(bts)
 }
+func(res PageResult)ToJSON()string{
+	bts, err := json.Marshal(res)
+	if err != nil {
+		panic(err)
+	}
+	return string(bts)
+}
 func Base64(value string) string {
 	return base64.StdEncoding.EncodeToString([]byte(value))
+}
+func Debase64(str string)string{
+	bts,err:=base64.StdEncoding.DecodeString(str)
+	if err!=nil{
+		panic(err)
+	}
+	return string(bts)
 }
 func LogTime(ti time.Time) {
 	fmt.Println(time.Since(ti).Milliseconds())
@@ -52,62 +74,79 @@ func LogTime(ti time.Time) {
 func Log(msg interface{}) {
 	fmt.Println(msg)
 }
-
-
-func QueryData(table string, host string, startTime int64, endTime int64, pageIndex int, pageSize int) {
-	defer LogTime(time.Now())
-	sTime := strconv.FormatInt(startTime, 10)
-	eTime := strconv.FormatInt(endTime, 10)
-
-	var scanner = Scanner{Batch: 10000024, StartRow: Base64(sTime), EndRow: Base64(eTime)}
-	filter:=Filter{Type:"FilterList",Op:"MUST_PASS_ALL",Filters:[]Filter{{Type: "FirstKeyOnlyFilter"}, {Type: "PageFilter", Value: pageIndex*pageSize}}}
-	scanner.Filter = filter.ToJSON()
-	jsonString := scanner.ToJSON()
-	Log(jsonString)
-
-	var url = fmt.Sprintf("http://%s/%s/scanner", host, table)
-	var contentType = "application/json"
-	response, err := httptools.SendRequest(url, "PUT", jsonString, contentType, contentType)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("创建Scanner响应结果:" + strconv.Itoa(response.StatusCode))
+func GetLocationFromResponse(response *http.Response)(string,error){
 	if response.StatusCode != 201 {
-		bbb, err := ioutil.ReadAll(response.Body)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(string(bbb))
-		fmt.Println(response)
+		return "", errors.New("create failed")
 	} else {
 		location := response.Header.Get("Location")
-		fmt.Println("结果读取地址(Location)为:" + location)
-		fmt.Println("---------------------")
-		response, err = httptools.SendRequest(location, "GET", "", "application/json", "application/json")
-		if err != nil {
-			panic(err)
-		}
-		bts, err := ioutil.ReadAll(response.Body)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(len(bts))
-
-		var hbData = model.HBaseData{}
-		err = json.Unmarshal(bts, &hbData)
-		//hbData.DecodeBase64()
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(len(hbData.Rows))
-		/*for _, row := range hbData.Rows {
-			fmt.Print(row.RowKey)
-			for _, cell := range row.Cells {
-				fmt.Print("[" + cell.Column + "->" + cell.Value + "]")
-			}
-			fmt.Print("\n")
-		}*/
-
-		//开始找最大最小值
+		return location ,nil
 	}
+}
+func QueryData(table string, host string, startTime int64, endTime int64, pageIndex int, pageSize int) {
+	defer LogTime(time.Now())
+	result:=PageResult{PageIndex:pageIndex,PageSize:pageSize}
+	var scanner =CreateScanner(startTime,endTime,pageIndex,pageSize)
+	var url = fmt.Sprintf("http://%s/%s/scanner", host, table)
+	response, err:= httptools.SendRequest(url, "PUT", scanner.ToJSON(), "application/json", "application/json")
+	location,err:=GetLocationFromResponse(response)
+	response, err = httptools.SendRequest(location, "GET", "", "application/json", "application/json")
+	bts, err := ioutil.ReadAll(response.Body)
+	var hbData = model.HBaseData{}
+	err = json.Unmarshal(bts, &hbData)
+	
+	//--------获取到了全部的结果，计算分页的起始和结束位置------------------------------------------------
+	var recordCount= len(hbData.Rows) //总记录数
+	if (pageIndex-1)*pageSize>=recordCount{
+		fmt.Println("页码超出范围")
+		result.Count=recordCount
+		fmt.Println(result.ToJSON())
+		return
+	}
+	startIndex:=(pageIndex-1)*pageSize
+	endIndex:=Min(startIndex+pageSize-1,recordCount-1)
+	startKey:=hbData.Rows[startIndex].RowKey
+	endKey:=Debase64(hbData.Rows[endIndex].RowKey)
+	endKeyInt,err:=strconv.Atoi(endKey)
+	endKeyInt+=1
+	endKey=Base64(strconv.Itoa(endKeyInt))
+	//计算出了startKey和endKey，接下来查询数据
+	lastScanner:=Scanner{StartRow:startKey,EndRow:endKey,Batch:1000000}
+	response, err = httptools.SendRequest(url, "PUT", lastScanner.ToJSON(), "application/json", "application/json")
+	location,err=GetLocationFromResponse(response)
+	fmt.Println(location)
+	response, err = httptools.SendRequest(location, "GET", "", "application/json", "application/json")
+	bts, err = ioutil.ReadAll(response.Body)
+	var hbDataLast = model.HBaseData{}
+
+
+
+	err = json.Unmarshal(bts, &hbDataLast)
+	hbDataLast.DecodeBase64()
+	var tss [] model.TraceMessage
+	for _,row:=range hbDataLast.Rows{
+		cell:= row.GetCell("info:jsondata")
+		var ts model.TraceMessage
+		json.Unmarshal([]byte(cell.Value),&ts)
+		tss=append(tss,ts)
+	}
+	pagerRes:=PageResult{Count:recordCount,PageIndex:pageIndex,PageSize:pageSize,Data:tss}
+	bts,_=json.Marshal(pagerRes)
+	fmt.Println(string(bts))
+	Log(err)
+}
+func Min(a int ,b int)int{
+	if a<=b{
+		return a
+	}else{
+		return b
+	}
+}
+func CreateScanner(startTime int64,endTime int64,pageIndex int,pageSize int)Scanner{
+	sTime := strconv.FormatInt(startTime, 10)
+	eTime := strconv.FormatInt(endTime+1, 10)
+	var scanner = Scanner{Batch: 1000000, StartRow: Base64(sTime), EndRow: Base64(eTime)}
+	filter:=Filter{Type:"FilterList",Op:"MUST_PASS_ALL",Filters:[]Filter{{Type: "FirstKeyOnlyFilter"}, {Type: "PageFilter", Value: pageIndex*pageSize}}}
+	filter=Filter{Type: "FirstKeyOnlyFilter"}
+	scanner.Filter = filter.ToJSON()
+	return scanner
 }
