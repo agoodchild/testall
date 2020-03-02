@@ -5,12 +5,18 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"time"
 )
 
 //删除所有表
 func main() {
 	//不输入参数的情况下，走查询
 	if len(os.Args) < 2 {
+		module.InsertOrderTestData()
+		t1:=time.Unix(111,0)
+		t:=time.Unix(222,0)
+		fmt.Println(t1)
+		fmt.Println(t)
 		fmt.Println("使用方法：")
 		fmt.Println("scan：根据filter.xml中的内容扫描数据")
 		fmt.Println("createdata：生成20条测试数据")
@@ -41,5 +47,13 @@ func main() {
 			endTime :=int64(1582633622)
 			module.QueryData("test1", "127.0.0.1:9093", startTime, endTime, pageIndex, pageSize)
 		}
+		if operate == "testtime" {
+			t:=time.Unix(222,0)
+			fmt.Println(t)
+		}
+		if operate == "mysql" {
+			module.TestMySQL()
+		}
+
 	}
 }
