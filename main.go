@@ -12,7 +12,7 @@ import (
 func main() {
 	//不输入参数的情况下，走查询
 	if len(os.Args) < 2 {
-		module.InsertOrderTestData()
+		module.Q()
 		t1:=time.Unix(111,0)
 		t:=time.Unix(222,0)
 		fmt.Println(t1)
