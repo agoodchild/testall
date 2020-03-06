@@ -9,7 +9,7 @@ import (
 )
 
 //删除所有表
-func main() {
+func main2() {
 	//不输入参数的情况下，走查询
 	if len(os.Args) < 2 {
 		module.CreateBigTestData("127.0.0.1:9093")
