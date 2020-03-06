@@ -12,8 +12,10 @@ import (
 func main() {
 	//不输入参数的情况下，走查询
 	if len(os.Args) < 2 {
-		module.Q()
-		t1:=time.Unix(111,0)
+		module.CreateBigTestData("127.0.0.1:9093")
+		//module.InsertOrderTestData()
+		//module.Q()
+		/*t1:=time.Unix(111,0)
 		t:=time.Unix(222,0)
 		fmt.Println(t1)
 		fmt.Println(t)
@@ -21,7 +23,7 @@ func main() {
 		fmt.Println("scan：根据filter.xml中的内容扫描数据")
 		fmt.Println("createdata：生成20条测试数据")
 		fmt.Println("big：生成10万条测试数据")
-		fmt.Println("query：分页查询")
+		fmt.Println("query：分页查询")*/
 	} else {
 		operate := os.Args[1]
 
@@ -32,7 +34,9 @@ func main() {
 			module.CreateTestData()
 		}
 		if operate == "big" {
-			module.CreateBigTestData("trackinfo_deviceid1", "127.0.0.1:9093", 100000)
+		//	"9.134.193.247:9093"
+			module.CreateBigTestData("9.134.193.247:9093")
+		//	module.CreateBigTestData("trackinfo_deviceid1", "127.0.0.1:9093", 100000)
 		}
 		if operate == "query" {
 			pageIndex := 1

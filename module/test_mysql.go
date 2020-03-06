@@ -38,7 +38,7 @@ var openOnce sync.Once
 
 func GetDB() *xorm.Engine {
 	openOnce.Do(func() {
-		dbEngine, err := xorm.NewEngine("mysql", "root:@tcp(106.54.101.237:3306)/trace?charset=utf8")
+		dbEngine, err := xorm.NewEngine("mysql", "tars:tars2015@tcp(49.232.64.229:6666)/lzh?charset=utf8")
 		if err != nil {
 			panic(err)
 		}
@@ -94,22 +94,12 @@ func InsertOrderTestData() {
 			Distance:  distanceFloat,
 		}
 		orders = append(orders, order)
-		/*if len(orders)>=2000{
-			session.Insert(orders)
-			clearSlice(&orders)
-		}*/
-		/*_,err:=GetDB().Table("t_order").Insert(order)
-		if err!=nil{
-			panic(err)
-		}*/
 		fmt.Println(i)
 	}
-	count, err := session.Insert(orders)
+	_, err := session.Insert(orders)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(count)
-	fmt.Println("完成")
 }
 
 type DeviceOrderObj struct {
