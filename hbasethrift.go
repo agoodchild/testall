@@ -16,7 +16,7 @@ const (
 )
 
 //删除所有表
-func main() {
+func main33() {
 	protocolFactory := thrift.NewTBinaryProtocolFactoryDefault()
 	transport, err := thrift.NewTSocket(net.JoinHostPort(HOST, PORT))
 	if err != nil {
