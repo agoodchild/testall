@@ -19,38 +19,8 @@ type PageResult struct {
 	Count     int         `json:"count"`
 	Data      interface{} `json:"data"`
 }
-type Scanner struct {
-	Batch    int    `json:"batch,omitempty"`
-	StartRow string `json:"startRow,omitempty"` //包含
-	EndRow   string `json:"endRow,omitempty"`   //不包含
-	Filter   string `json:"filter,omitempty"`
-	Column   string `json:"column,omitempty"`
-}
-type Filter struct {
-	Type       string      `json:"type,omitempty"`
-	Op         string      `json:"op,omitempty"`
-	Comparator *Comparator `json:"comparator,omitempty"`
-	Value      interface{} `json:"value,omitempty"`
-	Filters    []Filter    `json:"filters,omitempty"`
-}
-type Comparator struct {
-	Type  string `json:"type,omitempty"`
-	Value string `json:"value,omitempty"`
-}
-func (filter Filter) ToJSON() string {
-	bts, err := json.Marshal(filter)
-	if err != nil {
-		panic(err)
-	}
-	return string(bts)
-}
-func (scanner Scanner) ToJSON() string {
-	bts, err := json.Marshal(scanner)
-	if err != nil {
-		panic(err)
-	}
-	return string(bts)
-}
+
+
 func(res PageResult)ToJSON()string{
 	bts, err := json.Marshal(res)
 	if err != nil {
@@ -110,7 +80,7 @@ func QueryData(table string, host string, startTime int64, endTime int64, pageIn
 	endKeyInt+=1
 	endKey=Base64(strconv.Itoa(endKeyInt))
 	//计算出了startKey和endKey，接下来查询数据
-	lastScanner:=Scanner{StartRow:startKey,EndRow:endKey,Batch:1000000}
+	lastScanner:=model.Scanner{StartRow:startKey,EndRow:endKey,Batch:1000000}
 	response, err = httptools.SendRequest(url, "PUT", lastScanner.ToJSON(), "application/json", "application/json")
 	location,err=GetLocationFromResponse(response)
 	fmt.Println(location)
@@ -141,12 +111,12 @@ func Min(a int ,b int)int{
 		return b
 	}
 }
-func CreateScanner(startTime int64,endTime int64,pageIndex int,pageSize int)Scanner{
+func CreateScanner(startTime int64,endTime int64,pageIndex int,pageSize int)model.Scanner{
 	sTime := strconv.FormatInt(startTime, 10)
 	eTime := strconv.FormatInt(endTime+1, 10)
-	var scanner = Scanner{Batch: 1000000, StartRow: Base64(sTime), EndRow: Base64(eTime)}
-	filter:=Filter{Type:"FilterList",Op:"MUST_PASS_ALL",Filters:[]Filter{{Type: "FirstKeyOnlyFilter"}, {Type: "PageFilter", Value: pageIndex*pageSize}}}
-	filter=Filter{Type: "FirstKeyOnlyFilter"}
+	var scanner = model.Scanner{Batch: 1000000, StartRow: Base64(sTime), EndRow: Base64(eTime)}
+	filter:=model.Filter{Type:"FilterList",Op:"MUST_PASS_ALL",Filters:[]model.Filter{{Type: "FirstKeyOnlyFilter"}, {Type: "PageFilter", Value: pageIndex*pageSize}}}
+	filter=model.Filter{Type: "FirstKeyOnlyFilter"}
 	scanner.Filter = filter.ToJSON()
 	return scanner
 }

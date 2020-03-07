@@ -50,3 +50,5 @@ func CreateTable(tableName string,host string)error{
 	fmt.Println("Create Table :'"+tableName+"'")
 	return err
 }
+
+

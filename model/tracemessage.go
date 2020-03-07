@@ -12,7 +12,7 @@ type TraceMessage struct {
 	APIKey    string        `json:"api_key"`
 	StartTime int64         `json:"starttime"`
 	EndTime   int64         `json:"endtime"`
-	Distance  int           `json:"distance"`
+	Distance  float64           `json:"distance"`
 	Duration  int           `json:"duration"`
 	Opt       int           `json:"opt"`
 	TimeRes   []TimeResDsc  `json:"time_res"`
@@ -49,7 +49,7 @@ type TimeResDsc struct {
 	ZoneEnd   string `json:"zone_end"`
 	Start     string `json:"start"`
 	End       string `json:"end"`
-	Distance  int    `json:"distance"`
+	Distance  float64    `json:"distance"`
 	Duration  int    `json:"duration"`
 }
 
