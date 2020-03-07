@@ -9,9 +9,11 @@ import (
 )
 
 //删除所有表
-func main2() {
+func main() {
 	//不输入参数的情况下，走查询
 	if len(os.Args) < 2 {
+		//module.CreateBigTestData("9.22.15.25:9093")
+		//module.InsertOrderTestData()
 		//module.Q()
 		t1:=time.Unix(111,0)
 		t:=time.Unix(222,0)
@@ -25,6 +27,16 @@ func main2() {
 	} else {
 		operate := os.Args[1]
 
+		if operate == "rest" {
+			HbaseREST()
+		}
+		if operate == "thrift" {
+			HbaseThrift2()
+		}
+
+		if operate == "thrift3" {
+			HbaseThrift3()
+		}
 		if operate == "scan" {
 			module.ScanData("test1", "127.0.0.1:9093")
 		}
@@ -32,7 +44,9 @@ func main2() {
 			module.CreateTestData()
 		}
 		if operate == "big" {
-			module.CreateBigTestData("trackinfo_deviceid1", "127.0.0.1:9093", 100000)
+			//	"9.134.193.247:9093"
+			module.CreateBigTestData("9.134.193.247:9093")
+			//	module.CreateBigTestData("trackinfo_deviceid1", "127.0.0.1:9093", 100000)
 		}
 		if operate == "query" {
 			pageIndex := 1
@@ -44,11 +58,11 @@ func main2() {
 				pageSize, _ = strconv.Atoi(os.Args[3])
 			}
 			startTime := int64(1582623622) // endTime - int64(pageSize)
-			endTime :=int64(1582633622)
+			endTime := int64(1582633622)
 			module.QueryData("test1", "127.0.0.1:9093", startTime, endTime, pageIndex, pageSize)
 		}
 		if operate == "testtime" {
-			t:=time.Unix(222,0)
+			t := time.Unix(222, 0)
 			fmt.Println(t)
 		}
 		if operate == "mysql" {

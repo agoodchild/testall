@@ -255,29 +255,51 @@ func CreateTestData() {
 	fmt.Println("创建测试数据成功")
 }
 
-func CreateBigTestData(table string,host string ,count int){
-	hbd:= HBaseData{
-		Table:table,
-	}
-	var traceData=`{"orderid":"%s","deviceid":"device_key_value","api_key":"api_key_value","starttime":1582602213,"endtime":1582602213,"distance":0,"duration":12,"opt":0,"time_res":[{"time_start":"17:00","time_end":"20:00","zone_start":"2020-02-24 17:00:00","zone_end":"2020-02-24 20:00:00","start":"2020-02-24 17:48:27","end":"2020-02-24 17:48:39","distance":0,"duration":12}],"track":[{"loctime":1582537715,"bind_lng":116.805898,"bind_lat":40.038987,"bind_bearing":40.038987,"altitude":40.038987,"radius":40.038987,"speed":40.038987,"bearing":40.038987}],"track_opt":[{"loctime":1582537715,"bind_lng":116.805898,"bind_lat":40.038987,"bind_bearing":40.038987,"altitude":40.038987,"radius":40.038987,"speed":40.038987,"bearing":40.038987}]}`
-	max:=1582633622
-	var rows []HBaseRow
-	for i:=0;i<count;i++{
-		key:=strconv.Itoa(max-i)
-		td:=fmt.Sprintf(traceData,strconv.Itoa(i))
-		row:=HBaseRow{
-			RowKey:key,
-			Cells: []HBaseCell{
-				{Column:"id:id",Value:key},
-				{Column:"info:starttime",Value:"1582633622"},
-				{Column:"info:endtime",Value:"1582720022"},
-				{Column:"info:jsondata",Value:td},
-			},
+func CreateBigTestData(host string ){
+	//deviceid,distance,endtime,orderid,starttime
+	var traceData=`{"apikey":"OSPBZ-MOE3X-4A64S-ZZNXQ-QNQB2-4VBG7","deviceid":"%s","distance":%s,"duration":13,"endtime":%s,"orderid":"%s","starttime":%s,"time_res":[{"distance":0,"duration":13,"end":"2020-03-03 08:56:00","start":"2020-03-03 08:55:47","time_end":"10:00","time_start":"07:00","zone_end":"2020-03-03 10:00:00","zone_start":"2020-03-03 07:00:00"}],"track":[{"altitude":5,"bearing":20,"bind_bearing":30,"bind_lat":40.039,"bind_lng":116.806,"latitude":40.039,"loctime":1583196956,"longitude":116.806,"radius":15,"speed":15}],"track_opt":[{"altitude":5,"bearing":30,"bind_bearing":0,"bind_lat":0,"bind_lng":0,"latitude":0,"loctime":1583196947,"longitude":0,"radius":15,"speed":15}]}`
+	orderIndex:=1
+	//循环100个设备，每个设备100个轨迹数据
+	for i:=0;i<100;i++{
+		deviceID:="id"+strconv.Itoa(i+1)
+		hbase.CreateTable("trackinfo_order_"+deviceID,host)
+		hbase.CreateTable("trackinfo_time_"+deviceID,host)
+		hbdOrderKey:=HBaseData{Table:"trackinfo_order_"+deviceID}
+		hbdTimeKey:=HBaseData{Table:"trackinfo_time_"+deviceID}
+		//每个设备100条数据
+		for j:=0;j<100;j++{
+			orderID:="oid"+strconv.Itoa(orderIndex)
+			distanceFloat := float64(RangeRand(10, 1000)) / 10.0
+			startTime := RangeRand(1572533622, 1582633622)
+			endTime := startTime + 10000
+
+			jsonData:=fmt.Sprintf(traceData,deviceID,strconv.FormatFloat(distanceFloat,'f', -1, 64),strconv.FormatInt(endTime,10),orderID,strconv.FormatInt(startTime,10))
+
+			hbRowOrderKey:=HBaseRow{
+				RowKey: orderID,
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:orderID},
+					{Column:"info:starttime",Value: strconv.FormatInt(startTime,10)},
+					{Column:"info:endtime",Value: strconv.FormatInt(endTime,10),},
+					{Column:"data:orderdata",Value:jsonData},
+				},
+			}
+			hbRowTimeKey:=HBaseRow{
+				RowKey: strconv.FormatInt(startTime,10),
+				Cells: []HBaseCell{
+					{Column:"id:id",Value:orderID},
+					{Column:"info:starttime",Value: strconv.FormatInt(startTime,10)},
+					{Column:"info:endtime",Value: strconv.FormatInt(endTime,10),},
+					{Column:"data:orderdata",Value:jsonData},
+				},
+			}
+			hbdOrderKey.Rows=append(hbdOrderKey.Rows,hbRowOrderKey)
+			hbdTimeKey.Rows=append(hbdTimeKey.Rows,hbRowTimeKey)
+			orderIndex+=1
 		}
-		rows=append(rows,row)
+		hbase.SaveHBaseDataToHBase([]HBaseData{hbdOrderKey,hbdTimeKey},host)
 	}
-	hbd.Rows=rows
-	hbase.SaveHBaseDataToHBase([]HBaseData{hbd},host)
 	fmt.Println("创建测试数据成功")
 }
+
 
