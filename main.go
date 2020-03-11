@@ -15,8 +15,8 @@ func main() {
 		//module.CreateBigTestData("9.22.15.25:9093")
 		//module.InsertOrderTestData()
 		//module.Q()
-		t1:=time.Unix(111,0)
-		t:=time.Unix(222,0)
+		t1 := time.Unix(111, 0)
+		t := time.Unix(222, 0)
 		fmt.Println(t1)
 		fmt.Println(t)
 		fmt.Println("使用方法：")
@@ -26,6 +26,10 @@ func main() {
 		fmt.Println("query：分页查询")
 	} else {
 		operate := os.Args[1]
+
+		if operate == "statistic" {
+			module.Statistic()
+		}
 
 		if operate == "rest" {
 			HbaseREST()
@@ -68,6 +72,14 @@ func main() {
 		if operate == "mysql" {
 			module.TestMySQL()
 		}
-
+		if operate == "pool" {
+			if len(os.Args)>2{
+				count := os.Args[2]
+				icount,_:=strconv.Atoi(count)
+				module.TestPool(icount)
+			}else{
+				module.TestPool(20)
+			}
+		}
 	}
 }
