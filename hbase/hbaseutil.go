@@ -27,14 +27,19 @@ func SaveHBaseDataToHBase(traceDataArray []model.HBaseData,host string) {
 	}
 }
 
-func DeleteAllTables(host string) {
+func DeleteAllTables(host string,prefix string) {
 	response,_:= httptools.SendRequest("http://"+host+"/","GET","","text/plain","text/plain")
-	if response.StatusCode==200{
-		bts,_:=ioutil.ReadAll(response.Body)
-		arr:=strings.Split(string(bts), "\n")
-		for _,tbName:=range arr{
-			_,_= httptools.SendRequest("http://"+host+"/"+tbName+"/schema","DELETE","","text/plain","text/plain")
+	if response.StatusCode==200 {
+		bts, _ := ioutil.ReadAll(response.Body)
+		arr := strings.Split(string(bts), "\n")
+		for _, tbName := range arr {
+			if strings.HasPrefix(tbName, prefix) {
+				_, _ = httptools.SendRequest("http://"+host+"/"+tbName+"/schema", "DELETE", "", "text/plain", "text/plain")
+				fmt.Println("删除表:" + tbName)
+			}
 		}
+	}else{
+		fmt.Println(response.StatusCode)
 	}
 	fmt.Println("删除所有表成功")
 }

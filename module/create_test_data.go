@@ -258,6 +258,8 @@ func CreateTestData() {
 func CreateBigTestData(host string ){
 	//deviceid,distance,endtime,orderid,starttime
 	var traceData=`{"apikey":"OSPBZ-MOE3X-4A64S-ZZNXQ-QNQB2-4VBG7","deviceid":"%s","distance":%s,"duration":13,"endtime":%s,"orderid":"%s","starttime":%s,"time_res":[{"distance":0,"duration":13,"end":"2020-03-03 08:56:00","start":"2020-03-03 08:55:47","time_end":"10:00","time_start":"07:00","zone_end":"2020-03-03 10:00:00","zone_start":"2020-03-03 07:00:00"}],"track":[{"altitude":5,"bearing":20,"bind_bearing":30,"bind_lat":40.039,"bind_lng":116.806,"latitude":40.039,"loctime":1583196956,"longitude":116.806,"radius":15,"speed":15}],"track_opt":[{"altitude":5,"bearing":30,"bind_bearing":0,"bind_lat":0,"bind_lng":0,"latitude":0,"loctime":1583196947,"longitude":0,"radius":15,"speed":15}]}`
+	trackData:=`[{"altitude":5,"bearing":20,"bind_bearing":30,"bind_lat":40.039,"bind_lng":116.806,"latitude":40.039,"loctime":1583196956,"longitude":116.806,"radius":15,"speed":15}]`
+	trackOptData:=`[{"altitude":5,"bearing":30,"bind_bearing":0,"bind_lat":0,"bind_lng":0,"latitude":0,"loctime":1583196947,"longitude":0,"radius":15,"speed":15}]`
 	orderIndex:=1
 	//循环100个设备，每个设备100个轨迹数据
 	for i:=0;i<100;i++{
@@ -278,19 +280,25 @@ func CreateBigTestData(host string ){
 			hbRowOrderKey:=HBaseRow{
 				RowKey: orderID,
 				Cells: []HBaseCell{
-					{Column:"id:id",Value:orderID},
+					{Column:"id:orderid",Value:orderID},
+					{Column:"id:deviceid",Value:deviceID},
 					{Column:"info:starttime",Value: strconv.FormatInt(startTime,10)},
 					{Column:"info:endtime",Value: strconv.FormatInt(endTime,10),},
 					{Column:"data:orderdata",Value:jsonData},
+					{Column:"data:trackorigin",Value:trackData},
+					{Column:"data:trackoptimized",Value:trackOptData},
 				},
 			}
 			hbRowTimeKey:=HBaseRow{
 				RowKey: strconv.FormatInt(startTime,10),
 				Cells: []HBaseCell{
-					{Column:"id:id",Value:orderID},
+					{Column:"id:orderid",Value:orderID},
+					{Column:"id:deviceid",Value:deviceID},
 					{Column:"info:starttime",Value: strconv.FormatInt(startTime,10)},
 					{Column:"info:endtime",Value: strconv.FormatInt(endTime,10),},
 					{Column:"data:orderdata",Value:jsonData},
+					{Column:"data:trackorigin",Value:trackData},
+					{Column:"data:trackoptimized",Value:trackOptData},
 				},
 			}
 			hbdOrderKey.Rows=append(hbdOrderKey.Rows,hbRowOrderKey)
