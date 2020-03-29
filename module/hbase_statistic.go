@@ -33,7 +33,6 @@ func GetClient()*hbase.THBaseServiceClient {
 	return thriftClient
 }
 
-
 func Statistic(){
 	client:=GetClient()
 	tColumn:=hbase.TColumn{
